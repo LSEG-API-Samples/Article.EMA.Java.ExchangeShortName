@@ -1,1 +1,0 @@
-# Article-EMA-Java-ExchangeShortName
