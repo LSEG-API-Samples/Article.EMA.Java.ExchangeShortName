@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Article-EMA-Java-ExchangeShortName
 ## Overview
 For some instruments, suffix of RIC indicates the exchange where it is traded, e.g. HSBA.L (.L = LSE - London Stock Exchange), HBC.N (.N = NYSE - New York Stock Exchange). However, there are some instruments without the exchange code suffix like TWXF2Z7 (Time Warner DEC7), KC4F5Z7 (Kone Corp DEC7), etc. How the application know the exchange of those instruments?
@@ -29,6 +28,4 @@ RDN_EXCHD2  1709
       1455     "SMP"   Euronext - Smartpool
       1456     "BT1"   BATS ONE - LEVEL 1 (PRODUCT)
 ```
-=======
-# Article-EMA-Java-ExchangeShortName
->>>>>>> 4fcd5dcb02462e04cd7388df7dcb14e68cbd5de6
+
