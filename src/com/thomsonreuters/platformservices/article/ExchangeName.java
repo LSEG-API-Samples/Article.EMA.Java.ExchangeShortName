@@ -121,8 +121,8 @@ public class ExchangeName {
         OmmConsumer consumer = null;
         try {
             AppClient appClient = new AppClient();
-            //Initialize OmmConsumer object
-            consumer = EmaFactory.createOmmConsumer(EmaFactory.createOmmConsumerConfig().host("172.20.33.11:14002").username("user"));
+            //Initialize OmmConsumer object. Use the EmaConfig.xml's Consumer_1 configuration to assign ADS IP and RSSL Port
+            consumer = EmaFactory.createOmmConsumer(EmaFactory.createOmmConsumerConfig().consumerName("Consumer_1"));
 
             //View
             ElementList view = EmaFactory.createElementList();
@@ -139,7 +139,7 @@ public class ExchangeName {
             view.add(EmaFactory.createElementEntry().uintValue(EmaRdm.ENAME_VIEW_TYPE, 1));
             view.add(EmaFactory.createElementEntry().array(EmaRdm.ENAME_VIEW_DATA, view_array));
             //Send a request message to Elektron with View request in the payload
-            consumer.registerClient(EmaFactory.createReqMsg().serviceName("ELEKTRON_DD").name("HSBA.L").payload(view), appClient);
+            consumer.registerClient(EmaFactory.createReqMsg().serviceName("ELEKTRON_DD").name("TWXF2Z7").payload(view), appClient);
 
             Thread.sleep(60000);            // API calls onRefreshMsg(), onUpdateMsg() and onStatusMsg()
         } catch (InterruptedException | OmmException excp) {
