@@ -31,7 +31,7 @@ class AppClient implements OmmConsumerClient {
         System.out.println("Service Name: " + (refreshMsg.hasServiceName() ? refreshMsg.serviceName() : "<not set>"));
 
         System.out.println("Item State: " + refreshMsg.state());
-
+        //Parsing incoming FieldList data
         if (DataType.DataTypes.FIELD_LIST == refreshMsg.payload().dataType())
             decode(refreshMsg.payload().fieldList());
 
@@ -43,6 +43,7 @@ class AppClient implements OmmConsumerClient {
         System.out.println("Item Name: " + (updateMsg.hasName() ? updateMsg.name() : "<not set>"));
         System.out.println("Service Name: " + (updateMsg.hasServiceName() ? updateMsg.serviceName() : "<not set>"));
 
+        //Parsing incoming FieldList data
         if (DataType.DataTypes.FIELD_LIST == updateMsg.payload().dataType())
             decode(updateMsg.payload().fieldList());
 
@@ -71,6 +72,7 @@ class AppClient implements OmmConsumerClient {
 
     //Decode incoming data FieldList object
     void decode(FieldList fieldList) {
+        //Iterates each FieldEntry object data
         for (FieldEntry fieldEntry : fieldList) {
             System.out.print("Fid: " + fieldEntry.fieldId() + " Name = " + fieldEntry.name() + " DataType: " + DataType.asString(fieldEntry.load().dataType()) + " Value: ");
 
@@ -97,10 +99,10 @@ class AppClient implements OmmConsumerClient {
                     case DataTypes.ASCII:
                         System.out.println(fieldEntry.ascii());
                         break;
-                    case DataTypes.ENUM: //Parsing ENUM data from enumtype.def information
+                    case DataTypes.ENUM: //Parsing ENUM data for RDN_EXCHD2
                         System.out.println(fieldEntry.hasEnumDisplay() ? fieldEntry.enumDisplay() : fieldEntry.enumValue());
                         break;
-                    case DataTypes.RMTES:
+                    case DataTypes.RMTES: //Parsing RMTES data for DSPLY_NAME field
                         System.out.println(fieldEntry.rmtes());
                         break;
                     case DataTypes.ERROR:
@@ -124,18 +126,18 @@ public class ExchangeName {
 
             //View
             ElementList view = EmaFactory.createElementList();
-            OmmArray array = EmaFactory.createOmmArray();
+            OmmArray view_array = EmaFactory.createOmmArray();
 
-            array.fixedWidth(2);
+            view_array.fixedWidth(2);
             //Add interested FIDs
-            array.add(EmaFactory.createOmmArrayEntry().intValue(3));
-            array.add(EmaFactory.createOmmArrayEntry().intValue(22));
-            array.add(EmaFactory.createOmmArrayEntry().intValue(25));
-            array.add(EmaFactory.createOmmArrayEntry().intValue(1709));
+            view_array.add(EmaFactory.createOmmArrayEntry().intValue(3)); //DSPLY_NAME
+            view_array.add(EmaFactory.createOmmArrayEntry().intValue(22)); //BID
+            view_array.add(EmaFactory.createOmmArrayEntry().intValue(25)); //ASK
+            view_array.add(EmaFactory.createOmmArrayEntry().intValue(1709)); //RDN_EXCHD2
 
 
             view.add(EmaFactory.createElementEntry().uintValue(EmaRdm.ENAME_VIEW_TYPE, 1));
-            view.add(EmaFactory.createElementEntry().array(EmaRdm.ENAME_VIEW_DATA, array));
+            view.add(EmaFactory.createElementEntry().array(EmaRdm.ENAME_VIEW_DATA, view_array));
             //Send a request message to Elektron with View request in the payload
             consumer.registerClient(EmaFactory.createReqMsg().serviceName("ELEKTRON_DD").name("HSBA.L").payload(view), appClient);
 

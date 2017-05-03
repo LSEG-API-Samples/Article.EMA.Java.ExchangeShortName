@@ -3,7 +3,7 @@
 For some instruments, suffix of RIC indicates the exchange where it is traded, e.g. HSBA.L (.L = LSE - London Stock Exchange), HBC.N (.N = NYSE - New York Stock Exchange). However, there are some instruments without the exchange code suffix like TWXF2Z7 (Time Warner DEC7), KC4F5Z7 (Kone Corp DEC7), etc. How the application know the exchange of those instruments?
 
 ## Solution
-The Elektron API 3.1.0 and above can retrieve a short exchange name information from the FID 1709 (Field name RDN_EXCHD2) for the Market Price domain. This FID 1709 is the enumeration field that used in the most of the exchanges.
+The [Elektron API 3.1.0](https://developers.thomsonreuters.com/elektron/elektron-sdk-java) and above can retrieve a short exchange name information from the FID 1709 (Field name RDN_EXCHD2) for the Market Price domain. This FID 1709 is the enumeration field that used in the most of the exchanges.
 
 #### RDMFieldDictionary
 ```
