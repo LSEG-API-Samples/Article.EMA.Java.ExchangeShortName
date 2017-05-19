@@ -1,4 +1,4 @@
-# Article-EMA-Java-ExchangeShortName
+# Article.EMA.Java.ExchangeShortName
 ## Overview
 For some instruments, suffix of RIC indicates the exchange where it is traded, e.g. HSBA.L (.L = LSE - London Stock Exchange), HBC.N (.N = NYSE - New York Stock Exchange). However, there are some instruments without the exchange code suffix like TWXF2Z7 (Time Warner DEC7), KC4F5Z7 (Kone Corp DEC7), etc. How the application know the exchange of those instruments?
 
