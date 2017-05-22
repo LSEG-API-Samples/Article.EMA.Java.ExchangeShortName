@@ -31,7 +31,7 @@ RDN_EXCHD2  1709
 ## Running the application
 You can get it via the following git command
 ```
-$>git clone git@github.com:TR-API-Samples/Article-EMA-Java-ExchangeShortName.git
+$>git clone git@github.com:TR-API-Samples/Article.EMA.Java.ExchangeShortName.git
 ```
 You can build the application and run it via the following steps
 
