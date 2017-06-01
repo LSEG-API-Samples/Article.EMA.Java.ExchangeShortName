@@ -1,9 +1,9 @@
 # Article.EMA.Java.ExchangeShortName
 ## Overview
-For some instruments, suffix of RIC indicates the exchange where it is traded, e.g. HSBA.L (.L = LSE - London Stock Exchange), HBC.N (.N = NYSE - New York Stock Exchange). However, there are some instruments without the exchange code suffix like TWXF2Z7 (Time Warner DEC7), KC4F5Z7 (Kone Corp DEC7), etc. How the application know the exchange of those instruments?
+For some instruments, suffix of RIC indicates the exchange where it is traded, e.g. HSBA.L (.L = LSE - London Stock Exchange), HBC.N (.N = NYSE - New York Stock Exchange). However, there are some instruments without the exchange code suffix like  KC4F5Z7 (Kone Corp DEC7), etc. How the application know the exchange of those instruments?
 
 ## Solution
-The [Elektron API 3.1.0](https://developers.thomsonreuters.com/elektron/elektron-sdk-java) and above can retrieve a short exchange name information from the FID 1709 (Field name RDN_EXCHD2) for the Market Price domain. This FID 1709 is the enumeration field that used in the most of the exchanges.
+Elektron provides a short exchange name information via the FID 1709 (Field name RDN_EXCHD2) for the Market Price domain. This FID 1709 is the enumeration field that used in the most of the exchanges. The [Elektron API 1.1.0 (EMA Java 3.1.0)](https://developers.thomsonreuters.com/elektron/elektron-sdk-java) and above can retrieve an enum value from dictionary directly, so it can help a consumer application get a short exchange name from this enumeration field.
 
 #### RDMFieldDictionary
 ```
@@ -33,9 +33,11 @@ You can get it via the following git command
 ```
 $>git clone git@github.com:TR-API-Samples/Article.EMA.Java.ExchangeShortName.git
 ```
+Note: The application works with EMA Java 3.1.0 (Elektron SDK 1.1.0) and above which supports the enum parsing only.
+
 You can build the application and run it via the following steps
 
-1. Copy all required EMA Java libraries to the "libs" folder. The required libraries are following
+1. Copy all required EMA Java 3.1.0 API libraries to the "libs" folder. The required libraries are following
       - ema.jar (&lt;Elektron SDK Java package&gt;/Ema/Libs)
       - upa.jar (&lt;Elektron SDK Java package&gt;/Eta/Libs)
       - upaValueAdd.jar (&lt;Elektron SDK Java package&gt;/Eta/Libs)
@@ -45,13 +47,14 @@ You can build the application and run it via the following steps
       - org.apache.commons.collections.jar (&lt;Elektron SDK Java package&gt;/Ema/Libs/apache)
       - slf4j-api-1.7.12.jar (&lt;Elektron SDK Java package&gt;/Ema/Libs/SLF4J/slf4j-1.7.12)
       - slf4j-api-1.7.12.jar (&lt;Elektron SDK Java package&gt;/Ema/Libs/SLF4J/slf4j-1.7.12)
+
 2. Install and configure [Apache ANT](http://ant.apache.org/) in your machine
 
-3. Configure the Channel_1 of EmaConfig.xml file to specify the host name of the server (the TREP or Elektron platform) to which the EMA connects. This is set thanks to the value of the <ChannelGroup><ChannelList><Channel><Host> node. This value can be a remote host name or IP address.
+3. Configure the Channel_1 of EmaConfig.xml file to specify the host name of the server (the TREP or Elektron platform) to which the EMA connects. This is for setting values of the <ChannelGroup><ChannelList><Channel><Host> node. This value can be a remote host name or IP address.
 
 4. You can change the requested service and item name in the following line of code to match your environment
 ```
-consumer.registerClient(EmaFactory.createReqMsg().serviceName("<service>").name("<item name>").payload(view), appClient);
+consumer.registerClient(EmaFactory.createReqMsg().serviceName("<service>").name("<item name>").interestAfterRefresh(false).payload(view), appClient);
 ```
 
 5. Build the application with ant command. All application class files will be available at "out" folder
@@ -66,14 +69,14 @@ java -cp .;..\libs\ema.jar;..\libs\upa.jar;..\libs\upaValueAdd.jar;..\libs\org.a
 
 7. The example output when you run the application for each item name:
 ```
-//TWXF2Z7
-Item Name: TWXF2Z7
+//TRI.N
+Item Name: TRI.N
 Service Name: ELEKTRON_DD
-Item State: Open / Ok / None / 'All is well'
-Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: Time Warner
-Fid: 22 Name = BID DataType: Real Value:  blank
-Fid: 25 Name = ASK DataType: Real Value:  blank
-Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: EUX //FID value: 418        "EUX"   EUREX
+Item State: Non-streaming / Ok / None / 'All is well'
+Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: THOMSON REUTERS
+Fid: 22 Name = BID DataType: Real Value: 43.65
+Fid: 25 Name = ASK DataType: Real Value: 43.66
+Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: NYS //FID value: 2          "NYS"   New York Stock Exchange
 
 //KC4F5Z7
 Item Name: KC4F5Z7
