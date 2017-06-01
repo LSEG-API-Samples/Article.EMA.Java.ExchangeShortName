@@ -57,7 +57,7 @@ You can build the application and run it via the following steps
 consumer.registerClient(EmaFactory.createReqMsg().serviceName("<service>").name("<item name>").interestAfterRefresh(false).payload(view), appClient);
 ```
 
-5. Build the application with ant command. All application class files will be available at "out" folder
+5. All application class files will be available at "out" folder, the EmaConfig.xml also copied to the out folder automatically.
 ```
 $>ant build
 ```
