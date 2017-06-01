@@ -16,6 +16,7 @@
         <echo message="Cleaning up old build output" />
         <delete>
             <fileset dir="${exchangename.article.dir}/out" includes="**/*.class"/>
+            <fileset file="${exchangename.article.dir}/out/EmaConfig.xml"/>
         </delete>
     </target>
 
@@ -29,6 +30,7 @@
             <src path="${exchangename.article.dir}/src"/>
             <classpath refid="exchangename.classpath"/>
         </javac>
+        <copy file="EmaConfig.xml" todir="${exchangename.article.dir}/out"/>
     </target>
 
 
