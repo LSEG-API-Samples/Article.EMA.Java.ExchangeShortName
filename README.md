@@ -55,67 +55,66 @@ Note: The application works with EMA Java 3.1.0 (Real-Time SDK 1.1.0) and above 
 You can build the application and run it via the following steps
 
 1. Install and configure [Apache ANT](http://ant.apache.org/) and [Apache IVY](https://ant.apache.org/ivy/) in your machine
+2. Configure the Channel_1 of EmaConfig.xml file to specify the host name and RSSL Port of the server (the ADS or Refinitiv Real-Time) to which the EMA connects. This is for setting values of the <ChannelGroup><ChannelList><Channel><Host> node. This value can be a remote host name or IP address.
+      ```
+      <Channel>
+            <Name value="Channel_1"/>								
+            <ChannelType value="ChannelType::RSSL_SOCKET"/>													
+            <CompressionType value="CompressionType::None"/>
+            <GuaranteedOutputBuffers value="5000"/>
+            <ConnectionPingTimeout value="30000"/>
+            <TcpNodelay value="1"/>
 
-3. Configure the Channel_1 of EmaConfig.xml file to specify the host name and RSSL Port of the server (the ADS or Refinitiv Real-Time) to which the EMA connects. This is for setting values of the <ChannelGroup><ChannelList><Channel><Host> node. This value can be a remote host name or IP address.
+            <Host value="[Your ADS HOST]"/>
+            <Port value="[Your ADS RSSL Port]"/>
+      </Channel>
+      ```
+3. You can change the requested service and item name in the following line of code to match your environment
+      ```
+      consumer.registerClient(EmaFactory.createReqMsg().serviceName("<service>").name("<item name>").interestAfterRefresh(false).payload(view), appClient);
+      ```
+4. All application class files will be available at "out" folder, the EmaConfig.xml also copied to the out folder automatically.
+      ```
+      $>ant build
+      ```
+5. Stay in the same location, run the application with the following command
+      ```
+      java -cp out;lib/* com.refinitiv.platformservices.article.ExchangeName
+      ```
+6. The example output when you run the application for each item name:
+      ```
+      //IBM.N
+      Item Name: IBM.N
+      Service Name: ELEKTRON_DD
+      Item State: Non-streaming / Ok / None / 'All is well'
+      Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: INTL BUS MACHINE
+      Fid: 22 Name = BID DataType: Real Value: 0.0
+      Fid: 25 Name = ASK DataType: Real Value: 0.0
+      Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: NYS //FID value: 2          "NYS"   New York Stock Exchange
 
-```
-<Channel>
-      <Name value="Channel_1"/>								
-      <ChannelType value="ChannelType::RSSL_SOCKET"/>													
-	<CompressionType value="CompressionType::None"/>
-	<GuaranteedOutputBuffers value="5000"/>
-      <ConnectionPingTimeout value="30000"/>
-	<TcpNodelay value="1"/>
+      //HSBA.L
+      Item Name: HSBA.L
+      Service Name: ELEKTRON_DD
+      Item State: Open / Ok / None / 'All is well'
+      Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: HSBC HOLDINGS
+      Fid: 22 Name = BID DataType: Real Value: 642.8
+      Fid: 25 Name = ASK DataType: Real Value: 642.9
+      Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: LSE //FID value: 64        "LSE"   London Stock Exchange
 
-	<Host value="[Your ADS HOST]"/>
-	<Port value="[Your ADS RSSL Port]"/>
-</Channel>
-```
+      //PTT.BK
+      Item Name: PTT.BK
+      Service Name: ELEKTRON_DD
+      Item State: Non-streaming / Ok / None / 'All is well'
+      Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: PTT
+      Fid: 22 Name = BID DataType: Real Value: 35.25
+      Fid: 25 Name = ASK DataType: Real Value: 35.5
+      Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: SET //FID value: 158        "SET"   The Stock Exchange of Thailand
+      ```
 
-4. You can change the requested service and item name in the following line of code to match your environment
-```
-consumer.registerClient(EmaFactory.createReqMsg().serviceName("<service>").name("<item name>").interestAfterRefresh(false).payload(view), appClient);
-```
+## Conclusion
 
-5. All application class files will be available at "out" folder, the EmaConfig.xml also copied to the out folder automatically.
-```
-$>ant build
-```
+If your application subscribes to data from Refinitiv Real-Time Infrastructure and you need an exchange information, you can get it from the FID 1709 (RDN_EXCHD2). The EMA Java API (version 3.1.0 and above) can help an application consume and parse this FID to get an exchange short name with only a few lines of code.
 
-6. Stay in the same location, run the application with the following command
-```
-java -cp out;lib/* com.refinitiv.platformservices.article.ExchangeName
-```
-
-7. The example output when you run the application for each item name:
-```
-//IBM.N
-Item Name: IBM.N
-Service Name: ELEKTRON_DD
-Item State: Non-streaming / Ok / None / 'All is well'
-Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: INTL BUS MACHINE
-Fid: 22 Name = BID DataType: Real Value: 0.0
-Fid: 25 Name = ASK DataType: Real Value: 0.0
-Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: NYS //FID value: 2          "NYS"   New York Stock Exchange
-
-//HSBA.L
-Item Name: HSBA.L
-Service Name: ELEKTRON_DD
-Item State: Open / Ok / None / 'All is well'
-Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: HSBC HOLDINGS
-Fid: 22 Name = BID DataType: Real Value: 642.8
-Fid: 25 Name = ASK DataType: Real Value: 642.9
-Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: LSE //FID value: 64        "LSE"   London Stock Exchange
-
-//PTT.BK
-Item Name: PTT.BK
-Service Name: ELEKTRON_DD
-Item State: Non-streaming / Ok / None / 'All is well'
-Fid: 3 Name = DSPLY_NAME DataType: Rmtes Value: PTT
-Fid: 22 Name = BID DataType: Real Value: 35.25
-Fid: 25 Name = ASK DataType: Real Value: 35.5
-Fid: 1709 Name = RDN_EXCHD2 DataType: Enum Value: SET //FID value: 158        "SET"   The Stock Exchange of Thailand
-```
 ## References
 For further details, please check out the following resources:
 * [Refinitiv Real-time Java API page](https://developers.refinitiv.com/elektron/elektron-sdk-java/) on the [Refinitiv Developer Community](https://developers.refinitiv.com/) web site.
