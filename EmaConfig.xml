@@ -45,8 +45,8 @@
 			<!-- TcpNodelay is optional: defaulted to 1 												-->
 			<!-- possible values: 1 (tcp_nodelay option set), 0 (tcp_nodelay not set)					-->
 			<TcpNodelay value="1"/>
-			<Host value="172.20.33.11"/>
-			<Port value="14012"/>
+			<Host value="127.0.0.1"/>
+			<Port value="14002"/>
 		</Channel>
 	</ChannelList>
 </ChannelGroup>

@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+    <info organisation="refinitiv" module="examples"/>
+    <dependencies>
+        <dependency org="com.thomsonreuters.ema" name="ema" rev="3.5.1.0" />
+    </dependencies>
+</ivy-module>
