@@ -73,8 +73,8 @@ Server) to which the EMA connects. This is for setting values of the <ChannelGro
             <ConnectionPingTimeout value="30000"/>
             <TcpNodelay value="1"/>
 
-            <Host value="[Your ADS HOST]"/>
-            <Port value="[Your ADS RSSL Port]"/>
+            <Host value="[Your Refinitiv Real-Time Advanced Distribution Server HOST]"/>
+            <Port value="[Your Refinitiv Real-Time Advanced Distribution Server RSSL Port]"/>
       </Channel>
       ```
 3. You can change the requested service and item name in the following line of code to match your environment
