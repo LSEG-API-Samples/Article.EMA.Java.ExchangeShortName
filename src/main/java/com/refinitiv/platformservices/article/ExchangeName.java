@@ -129,12 +129,12 @@ public class ExchangeName {
         try {
             AppClient appClient = new AppClient();
             //Initialize OmmConsumer object. Use the EmaConfig.xml's Consumer_1 configuration to assign ADS IP and RSSL Port
-            consumer = EmaFactory.createOmmConsumer(EmaFactory.createOmmConsumerConfig().consumerName("Consumer_1"));
+            consumer = EmaFactory.createOmmConsumer(EmaFactory.createOmmConsumerConfig().consumerName("Consumer_1").username("wasin"));
 
-            //View
-            ElementList view = EmaFactory.createElementList();
+            // View
+           
             OmmArray view_array = EmaFactory.createOmmArray();
-
+            // Set a fixed size for each array entry to minimize bandwidth, since we know their sizes
             view_array.fixedWidth(2);
             //Add interested FIDs
             view_array.add(EmaFactory.createOmmArrayEntry().intValue(3)); //DSPLY_NAME
@@ -142,15 +142,25 @@ public class ExchangeName {
             view_array.add(EmaFactory.createOmmArrayEntry().intValue(25)); //ASK
             view_array.add(EmaFactory.createOmmArrayEntry().intValue(1709)); //RDN_EXCHD2
 
+            //Batch
+            OmmArray batch_array = EmaFactory.createOmmArray();
+            // Add interested RICs
+            batch_array.add(EmaFactory.createOmmArrayEntry().ascii("PTT.BK"));
+            batch_array.add(EmaFactory.createOmmArrayEntry().ascii("LSEG.L"));
+            batch_array.add(EmaFactory.createOmmArrayEntry().ascii("NVDA.O"));
+            batch_array.add(EmaFactory.createOmmArrayEntry().ascii("2330.TW"));
 
-            view.add(EmaFactory.createElementEntry().uintValue(EmaRdm.ENAME_VIEW_TYPE, 1));
-            view.add(EmaFactory.createElementEntry().array(EmaRdm.ENAME_VIEW_DATA, view_array));
-            //Send a snapshot request message to Elektron with View request in the payload
+            // Combine both Batch and View and add them to ElementList 
+            ElementList batchView = EmaFactory.createElementList();
+            batchView.add(EmaFactory.createElementEntry().array(EmaRdm.ENAME_BATCH_ITEM_LIST, batch_array));
+            batchView.add(EmaFactory.createElementEntry().uintValue(EmaRdm.ENAME_VIEW_TYPE, 1));
+            batchView.add(EmaFactory.createElementEntry().array(EmaRdm.ENAME_VIEW_DATA, view_array));
+
+            //Send a snapshot request message to the Real-Time Platform endpoint with Batch View request in the payload
             consumer.registerClient(EmaFactory.createReqMsg()
                             .serviceName("ELEKTRON_DD")
-                            .name("PTT.BK")
                             .interestAfterRefresh(false)
-                            .payload(view)
+                            .payload(batchView)
                     , appClient);
 
             Thread.sleep(60000);            // API calls onRefreshMsg(), onUpdateMsg() and onStatusMsg()
