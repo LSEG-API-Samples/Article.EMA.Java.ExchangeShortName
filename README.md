@@ -148,7 +148,7 @@ Server) to which the EMA connects. This is for setting values of the <ChannelGro
 
 ## Conclusion
 
-If your application subscribes to data from Real-Time Infrastructure and you need an exchange information, you can get it from the FID 1709 (RDN_EXCHD2). The EMA Java API (version 3.1.0 and above) can help an application consume and parse this FID to get an exchange short name with only a few lines of code.
+If your application subscribes to data from the Real-Time Platform and you need an exchange information, you can get it from the FID 1709 (RDN_EXCHD2). The EMA Java API (version 3.1.0 and above) can help an application consume and parse this FID to get an exchange short name with only a few lines of code.
 
 ## References
 For further details, please check out the following resources:
@@ -158,6 +158,7 @@ For further details, please check out the following resources:
 * [Developer Webinar: Introduction to Enterprise App Creation With Open-Source Enterprise Message API](https://www.youtube.com/watch?v=2pyhYmgHxlU)
 * [Real-Time SDK Family](https://developers.lseg.com/en/use-cases-catalog/real-time) page.
 * [Enterprise Message API Java Quick Start](https://developers.lseg.com/en/api-catalog/real-time-opnsrc/rt-sdk-javaquick-start)
-* [Developer Article: 10 important things you need to know before you write an Enterprise Real Time application](https://developers.lseg.com/en/article-catalog/article/10-important-things-you-need-know-you-write-elektron-real-time-application)
+* [Developer Article: 10 important things you need to know before you write an Enterprise Real Time application](https://developers.lseg.com/en/article-catalog/article/10-important-things-you-need-know-you-write-elektron-real-time-application) article.
+* [Enterprise Messaging API (Java) - Batch and View features](https://developers.lseg.com/en/article-catalog/article/enterprise-messaging-api-java-batch-and-view-features) article.
 
 For any question related to this article or Enterprise Message API page, please use the Developer Community [Q&A Forum](https://community.developers.refinitiv.com).
