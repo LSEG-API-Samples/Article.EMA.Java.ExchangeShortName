@@ -80,7 +80,7 @@ class AppClient implements OmmConsumerClient {
     //Decode incoming data FieldList object
     void decode(FieldList fieldList) {
         //Iterates each FieldEntry object data
-        for (FieldEntry fieldEntry : fieldList) {
+        fieldList.forEach(fieldEntry -> {
             System.out.print("Fid: " + fieldEntry.fieldId() + " Name = " + fieldEntry.name() + " DataType: " + DataType.asString(fieldEntry.load().dataType()) + " Value: ");
 
             if (Data.DataCode.BLANK == fieldEntry.code())
@@ -119,7 +119,7 @@ class AppClient implements OmmConsumerClient {
                         System.out.println();
                         break;
                 }
-        }
+        });
     }
 }
 
